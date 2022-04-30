@@ -1,0 +1,30 @@
+{
+  "name": "nerkkis",
+  "version": "1.0.0",
+  "description": "Nerkkis (node-verkkis) Bot",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "prettier": "prettier --write '**/*.{scss,ts,js,md,json,html,yml,json}'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osmoossi/nerkkis.git"
+  },
+  "author": "osmoossi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/osmoossi/nerkkis/issues"
+  },
+  "homepage": "https://github.com/osmoossi/nerkkis#readme",
+  "devDependencies": {
+    "@types/node-telegram-bot-api": "0.56.2",
+    "prettier": "2.6.2",
+    "ts-node": "10.7.0",
+    "typescript": "4.6.4"
+  },
+  "dependencies": {
+    "axios": "0.27.2",
+    "node-telegram-bot-api": "0.57.0"
+  }
+}
