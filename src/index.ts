@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as TelegramBot from 'node-telegram-bot-api';
 import { URL } from 'url';
-import { Config, getConfig, sleepSeconds } from './utils';
+import { Config, getConfig, log, sleepSeconds } from './utils';
 
 const BASE_URL = 'https://api.verkkokauppa.com/api/v2/';
 const USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0';
@@ -32,7 +32,7 @@ const getCart = async (token: string): Promise<string> => {
     },
     method: 'GET',
   });
-  console.log('Found cart with id', resp.data.cartUuid);
+  log(`Found cart with id ${resp.data.cartUuid}`);
   return resp.data.cartUuid;
 };
 
@@ -40,7 +40,7 @@ const addToCart = async (token: string, cartId: string, config: Config): Promise
   const sku = new URL(config.verkkokauppaCom.productUrl).pathname.split('/')[3];
 
   while (true) {
-    console.log(`Trying to add ${config.productName} to cart...`);
+    log(`Trying to add ${config.productName} to cart...`);
     try {
       const resp = await axios({
         baseURL: BASE_URL,
@@ -53,16 +53,16 @@ const addToCart = async (token: string, cartId: string, config: Config): Promise
         method: 'PUT',
       });
       if (resp.data.errors.length === 0) {
-        console.log(`Succesfully added ${config.productName} (SKU ${sku}) to cart!`);
+        log(`Succesfully added ${config.productName} (SKU ${sku}) to cart!`);
         return;
       } else {
-        console.log(
+        log(
           `Unable to add ${config.productName} to cart (${resp.data.errors}), retrying in ${config.pollingIntervalInSeconds} seconds`
         );
       }
     } catch (e) {
       // Ignore errors, just retry
-      console.log(
+      log(
         `Error adding to cart, product might not be available. Retrying in ${config.pollingIntervalInSeconds} seconds.`
       );
     }

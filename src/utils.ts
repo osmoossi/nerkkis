@@ -33,3 +33,5 @@ export const getConfig = (): Config => ({
     : 15 * 60, // Defaults to 15 minutes
   exitOnSuccess: process.env.EXIT_ON_SUCCESS === 'false' ? false : true,
 });
+
+export const log = (message: string) => console.log(`${new Date().toLocaleString()} ${message}`);
